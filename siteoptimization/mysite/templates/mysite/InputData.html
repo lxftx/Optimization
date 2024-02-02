@@ -1,0 +1,108 @@
+{% extends 'mysite/Base.html' %}
+
+{% block mainmenu %}
+{% endblock %}
+
+{% block content %}
+<form method="POST" action="{% url 'AddValues' %}">
+    {% csrf_token %}
+    <div class="base">
+        <div class="base-table">
+            <div class="base-text">
+                Форма добавления данных
+            </div>
+            <table>
+                <tr>
+                    <th>Навзание предприятия</th>
+                    <th>Цена 1-ой мастерской</th>
+                    <th>Цена 2-ой мастерской</th>
+                    <th>Цена 3-ей мастерской</th>
+                    <th>Цена 4-ой мастерской</th>
+                    <th>Мощность предприятия</th>
+                </tr>
+                <tr>
+                {% for field in formInput %}
+                    <td>{{ field }}</td>
+                {% endfor %}
+                </tr>
+            </table>
+
+            <button name="SaveInput" class="base-button">Добавить данные</button>
+        </div>
+    </div>
+</form>
+
+{% if count_ogranic == 0 %}
+<form method="POST" action="{% url 'AddValues' %}">
+    {% csrf_token %}
+    <div class="base">
+        <div class="base-table">
+            <div class="base-text">
+                Ограничение
+            </div>
+            <table>
+                <tr>
+                    <th>Сумма 1-ой мастерской</th>
+                    <th>Сумма 2-ой мастерской</th>
+                    <th>Сумма 3-ой мастерской</th>
+                    <th>Сумма 4-ой мастерской</th>
+                </tr>
+                <tr>
+                {% for field in formOgranic %}
+                    <td>{{ field }}</td>
+                {% endfor %}
+                </tr>
+            </table>
+            <button name="SaveOgranic" class="base-button">Добавить данные</button>
+        </div>
+    </div>
+</form>
+{% endif %}
+
+<form method="POST" action="{% url 'AddValues' %}">
+    {% csrf_token %}
+
+<div class="base">
+    <div class="base-table">
+        <div class="base-text">
+            Вывод данных
+        </div>
+        <table>
+            <tr>
+                <th>Навзание предприятия</th>
+                <th>Цена 1-ой мастерской</th>
+                <th>Цена 2-ой мастерской</th>
+                <th>Цена 3-ей мастерской</th>
+                <th>Цена 4-ой мастерской</th>
+                <th>Мощность предприятия</th>
+            </tr>
+            {% for ip in input %}
+            <tr>
+                <td>{{ ip.NameFactory }}</td>
+                <td>{{ ip.CostWorkshopId1 }} руб/ед.</td>
+                <td>{{ ip.CostWorkshopId2 }} руб/ед.</td>
+                <td>{{ ip.CostWorkshopId3 }} руб/ед.</td>
+                <td>{{ ip.CostWorkshopId4 }} руб/ед.</td>
+                <td>{{ ip.PowerFactory }} тыс. шт.</td>
+            </tr>
+            {% endfor %}
+            {% for og in ogranic %}
+            <tr>
+                <td>Потребности мастерских</td>
+                <td>{{ og.SumWorkshopId1 }} тыс. шт.</td>
+                <td>{{ og.SumWorkshopId2 }} тыс. шт.</td>
+                <td>{{ og.SumWorkshopId3 }} тыс. шт.</td>
+                <td>{{ og.SumWorkshopId4 }} тыс. шт.</td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% if count_input != 0 %}
+            <button formnovalidate name="DeleteInput" value="{{ last_pk.pk }}" class="base-button">Удалить данные</button>
+        {% endif %}
+        {% if count_ogranic != 0 %}
+            <button formnovalidate name="DeleteOrganic" value="{{ last_pk_organic.pk }}" class="base-button">Удалить ограничения</button>
+        {% endif %}
+    </div>
+</div>
+</form>
+{% endblock %}

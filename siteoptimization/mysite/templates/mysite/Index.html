@@ -1,0 +1,30 @@
+{% extends 'mysite/Base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="first-window">
+    <div class="window-text">Транспортная задача</div>
+    <div class="window-text-logo">
+        <div class="window-text-logo-info">Постановка задачи</div>
+        <div class="window-text-logo-information">На металлургических заводах A1, ..., Ai изготавливают детали для станков, которые затем отправляют в мастерские B1, …, Bj. Дополнительно заданы стоимость перевозок (в у.ед./шт.), мощность заводов и потребности мастерских (в тыс. шт.).
+Требуется так спланировать распределение деталей между мастерскими (план перевозок деталей), чтобы расходы на перевозку были минимальными.
+        </div>
+    </div>
+    <div class="window-subtext">
+        <div class="window-subtext-info">Математическая модель задачи</div>
+        <div class="window-subtext-information">При составлении математической модели будет использовать исходные данные варианта 1. Обозначим через xij,  ,   количество деталей, отправляемых заводом Ai мастерской Bj. Стоимость перевозок обозначим через cij. Из постановки задачи следует, что требуется минимизировать общие расходы на перевозку</div>
+    </div>
+    <div class="window-img-formula">
+        <img src="{% static '\mysite\img\formyla.png' %}"  width="300px" alt="">
+    </div>
+    <div class="window-ogranicen">
+        <div class="window-ogranicen-text">при следующих ограничениях:</div>
+        <div class="window-ogranicen-subtext">1) все детали из всех заводов должны быть вывезены. </div>
+        <div class="window-ogranicen-img"><img src="{% static '\mysite\img\ogranic.png' %}" alt=""></div>
+        <div class="window-ogranicen-subtext">2) спрос на детали всех мастерских должны быть удовлетворен</div>
+        <div class="window-ogranicen-img"><img src="{% static '\mysite\img\ogranic2.png' %}" alt=""></div>
+        <div class="window-ogranicen-subtext">3) из физического смысла величин xij следует ограничение:</div>
+        <div class="window-ogranicen-img"><img src="{% static '\mysite\img\ogranic3.png' %}" alt=""></div>
+    </div>
+</div>
+{% endblock %}

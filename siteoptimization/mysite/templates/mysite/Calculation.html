@@ -1,0 +1,123 @@
+{% extends 'mysite/Base.html' %}
+
+{% block content %}
+<div class="base">
+    <div class="base-table">
+        <div class="base-text">
+            Вывод данных
+        </div>
+        <table>
+            <tr>
+                <th>Навзание предприятия</th>
+                <th>Цена 1-ой мастерской</th>
+                <th>Цена 2-ой мастерской</th>
+                <th>Цена 3-ей мастерской</th>
+                <th>Цена 4-ой мастерской</th>
+                <th>Мощность предприятия</th>
+            </tr>
+            {% for ip in input %}
+            <tr>
+                <td>{{ ip.NameFactory }}</td>
+                <td>{{ ip.CostWorkshopId1 }} руб/ед.</td>
+                <td>{{ ip.CostWorkshopId2 }} руб/ед.</td>
+                <td>{{ ip.CostWorkshopId3 }} руб/ед.</td>
+                <td>{{ ip.CostWorkshopId4 }} руб/ед.</td>
+                <td>{{ ip.PowerFactory }} тыс. шт.</td>
+            </tr>
+            {% endfor %}
+            {% for og in ogranic %}
+            <tr>
+                <td>Потребности мастерских</td>
+                <td>{{ og.SumWorkshopId1 }} тыс. шт.</td>
+                <td>{{ og.SumWorkshopId2 }} тыс. шт.</td>
+                <td>{{ og.SumWorkshopId3 }} тыс. шт.</td>
+                <td>{{ og.SumWorkshopId4 }} тыс. шт.</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+
+{% if output %}
+    <div class="base">
+        <div class="base-table">
+            <div class="base-text">
+                Расчетные данные
+            </div>
+            <table>
+                <tr>
+                    <th>Навзание предприятия</th>
+                    <th>Цена 1-ой мастерской</th>
+                    <th>Цена 2-ой мастерской</th>
+                    <th>Цена 3-ей мастерской</th>
+                    <th>Цена 4-ой мастерской</th>
+                    <th>Мощность предприятия</th>
+                </tr>
+                {% for ip in output %}
+                <tr>
+                    <td>{{ ip.NameFactory }} руб/ед.</td>
+                    <td>{{ ip.CostWorkshopId1 }} руб/ед.</td>
+                    <td>{{ ip.CostWorkshopId2 }} руб/ед.</td>
+                    <td>{{ ip.CostWorkshopId3 }} руб/ед.</td>
+                    <td>{{ ip.CostWorkshopId4 }} руб/ед.</td>
+                    <td>{{ ip.PowerFactory }} тыс. шт.</td>
+                </tr>
+                {% endfor %}
+                {% for og in ogranic %}
+                <tr>
+                    <td>Потребности мастерских</td>
+                    <td>{{ og.SumWorkshopId1 }} тыс. шт.</td>
+                    <td>{{ og.SumWorkshopId2 }} тыс. шт.</td>
+                    <td>{{ og.SumWorkshopId3 }} тыс. шт.</td>
+                    <td>{{ og.SumWorkshopId4 }} тыс. шт.</td>
+                </tr>
+                <tr>
+                    <td>Общая стоимость перевозок</td>
+                    <td>{{ cost }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+    <div class="diagram-container">
+        {% for ip in output %}
+        <div class="chart-container">
+            <canvas id="myChart{{ ip.pk }}"></canvas>
+        </div>
+        {% endfor %}
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+        <script>
+            {% for ip in output %}
+            const ctx{{ ip.pk }} = document.getElementById('myChart{{ ip.pk }}').getContext('2d');
+
+            new Chart(ctx{{ ip.pk }}, {
+                type: 'bar',
+                data: {
+                    labels: ['Цена 1-ой мастерской', 'Цена 2-ой мастерской', 'Цена 3-ей мастерской', 'Цена 4-ой мастерской'],
+                    datasets: [{
+                        label: 'Цены для {{ ip.NameFactory }} предприятия',
+                        data: [{{ip.CostWorkshopId1}}, {{ip.CostWorkshopId2}}, {{ip.CostWorkshopId3}}, {{ip.CostWorkshopId4}},],  // Синхронизируйте количество элементов в labels и data
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+            {% endfor %}
+        </script>
+    </div>
+{% else %}
+<div class="alert-message">
+    <div class="alert alert-danger" role="alert">
+        Ошибка! <br> Такие данные обработать нельзя!
+    </div>
+</div>
+{% endif %}
+{% endblock %}

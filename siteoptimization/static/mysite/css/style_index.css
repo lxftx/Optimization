@@ -1,0 +1,62 @@
+.information {
+    padding: 10px;
+    background-color: #EBC2AF;
+}
+
+.information-logo {
+        display: flex;
+        justify-content: center;
+}
+
+.information-logo-text, a{
+    font-size:20px;
+    color: #F9F8BB;
+    text-decoration: none;
+    font-family: "Unbounded", cursive;
+}
+
+a:hover {
+    color:red;
+}
+
+.window-text {
+    font-family: "Unbounded", cursive;
+    font-size: 50px;
+    text-decoration: underline;
+    text-align: center;
+    margin-top: 35px;
+}
+
+.window-text-logo, .window-subtext {
+    display: flex;
+    width: 1300px;
+    margin: 0 auto;
+    margin-top: 35px;
+}
+
+.window-text-logo-info, .window-subtext-info {
+    font-family: "Unbounded", cursive;
+    text-decoration: underline;
+    width: 250px;
+    font-size: 25px;
+}
+
+.window-text-logo-information, .window-subtext-information, .window-ogranicen-text, .window-ogranicen-subtext {
+    font-family: "Unbounded", cursive;
+    width: 1050px;
+    font-size: 25px;
+}
+
+.window-img-formula, .window-ogranicen-img {
+    position: relative;
+    left: 40%;
+    margin-top: 35px;
+    margin-bottom: 35px;
+    width: 150px;
+}
+
+.window-ogranicen {
+    width: 1300px;
+    margin: 0 auto;
+    margin-top: 35px;
+}
